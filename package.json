@@ -45,8 +45,8 @@
     ]
   },
   "build": {
-    "productName": "ElectronReactTypescript",
-    "appId": "io.github.irath96.ElectronReactTypescript",
+    "productName": "Fresca ERP Client",
+    "appId": "club.fresca.erp-client",
     "dmg": {
       "contents": [
         {
@@ -173,6 +173,7 @@
     "react-router-dom": "^4.1.1",
     "react-router-redux": "^5.0.0-alpha.6",
     "redux": "^3.6.0",
+    "redux-saga": "^0.16.0",
     "redux-thunk": "^2.1.0",
     "source-map-support": "^0.5.0"
   },
