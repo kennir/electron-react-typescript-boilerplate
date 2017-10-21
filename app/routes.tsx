@@ -3,7 +3,6 @@ import { Switch, Route } from 'react-router';
 import App from './containers/App';
 import HomePage from './containers/Home';
 
-
 export default () => (
   <App>
     <Switch>
