@@ -3,6 +3,7 @@ import * as MyApp from './myapp';
 import * as Auth from './auth';
 import AuthSaga from './auth/saga';
 import * as Orders from './orders';
+import OrdersSaga from './orders/saga';
 
 interface StoreRootState {
   myapp: MyApp.State;
@@ -13,11 +14,12 @@ interface StoreRootState {
 const reducers = {
   myapp: MyApp.default,
   auth: Auth.default,
-  orders: Auth.default,
+  orders: Orders.default,
 };
 
 const sagaes = [
   AuthSaga,
+  OrdersSaga
 ]
 
 export {

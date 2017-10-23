@@ -14,7 +14,7 @@ export const INITIAL_PAGINATION: Pagination = {
 
 export interface RequestStatus {
   loading: boolean;
-  lastUpdated?: moment.Moment;
+  lastUpdated: moment.Moment;
   statusCode?: number;
   statusText?: string;
   errorMessage?: string;
@@ -27,5 +27,6 @@ export interface RequestError {
 }
 
 export const INITIAL_REQUEST_STATUS: RequestStatus = {
-  loading: false
+  loading: false,
+  lastUpdated: moment()
 };

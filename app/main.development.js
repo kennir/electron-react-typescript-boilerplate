@@ -1,4 +1,4 @@
-const { app, BrowserWindow, Menu, shell } = require('electron');
+const { app, BrowserWindow, Menu, shell, ipcMain } = require('electron');
 
 let menu;
 let template;
@@ -36,6 +36,25 @@ const installExtensions = () => {
   return Promise.resolve([]);
 };
 
+const printOrder = (order) => {
+  let receptWindow = new BrowserWindow({width: 210, height: 1200, show: false});
+  receptWindow.on('closed', () => { receptWindow = null; });
+  receptWindow.loadURL(`file://${__dirname}/static/recept.html`);
+  receptWindow.webContents.on('did-finish-load', () => {
+    receptWindow.webContents.send('setup-content', order);
+    receptWindow.webContents.print({silent: false}, (success) => {
+      console.log(success);
+      receptWindow.close();
+    });
+  })
+}
+
+ipcMain.on('print_order', (event, args) => {
+  args.forEach(function(element) {
+    printOrder(element);
+  }, this);
+})
+
 app.on('ready', () =>
   installExtensions()
   .then(() => {
@@ -50,6 +69,8 @@ app.on('ready', () =>
   mainWindow.webContents.on('did-finish-load', () => {
     mainWindow.show();
     mainWindow.focus();
+
+    console.log(mainWindow.webContents.getPrinters());
   });
 
   mainWindow.on('closed', () => {

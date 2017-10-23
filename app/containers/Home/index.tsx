@@ -8,7 +8,7 @@ import { Switch } from 'react-router-dom';
 import { Auth, StoreRootState } from '../../reducers';
 import HeaderMenuBar from '../../components/Header';
 import LoginPage from '../../components/LoginPage';
-import OrderListPage from '../../components/OrderListPage';
+import DashboardPage from '../../components/Dashboard';
 const locationHelperBuilder = require('redux-auth-wrapper/history4/locationHelper');
 const r = require('redux-auth-wrapper/history4/redirect');
 
@@ -42,7 +42,7 @@ const userIsNotAuthenticated = r.connectedRouterRedirect({
 });
 
 const wrappedLoginPage = userIsNotAuthenticated(LoginPage)
-const wrappedOrderListPage = userIsAuthenticated(OrderListPage)
+const wrappedDashboardPage = userIsAuthenticated(DashboardPage)
 
 interface State { }
 
@@ -53,10 +53,10 @@ class Home extends React.Component<OwnProps, State> {
             <Header style={{ position: 'fixed', width: '100%' }}>
               <HeaderMenuBar />
             </Header>
-            <Content style={{ padding:'0 50px', marginTop: 64, height: '80vh' }}>
+            <Content style={{ marginTop: 64, height: '80vh' }}>
               <Switch>
                 <Route path="/login" component={wrappedLoginPage} />
-                <Route path="/" component={wrappedOrderListPage} />
+                <Route path="/" component={wrappedDashboardPage} />
               </Switch>
             </Content>
             <Footer style={{ textAlign: 'center' }}>

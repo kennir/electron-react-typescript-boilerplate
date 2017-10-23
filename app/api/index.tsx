@@ -1,7 +1,8 @@
 import axios, { AxiosError } from 'axios';
+import { ipcRenderer } from 'electron';
 
-const DEV_SERVER_BASE_URL = 'http://localhost:5001/api/v1.0';
-const SERVER_BASE_URL = 'http://120.26.68.200:5001/api/v1.0';
+const DEV_SERVER_BASE_URL = 'http://localhost:5000/api/v1.0';
+const SERVER_BASE_URL = 'http://120.26.68.200:5000/api/v1.0';
 
 
 interface ErrorMessage {
@@ -16,7 +17,7 @@ const knownErrors: ErrorMessage = {
   401: {
     'statusCode': '401',
     'statusText': '认证失败',
-    'errorMessage': '手机号码不存在或密码错误'
+    'errorMessage': '用户名不存在或密码错误'
   }
 };
 
@@ -112,6 +113,10 @@ const setToken = (token?: string): void => {
   axios.defaults.headers.common.Authorization = token ? `JWT ${token}` : undefined;
 }
 
+const print = (order: any): void => {
+  ipcRenderer.send('print_order', order);
+}
+
 export {
   init,
   get,
@@ -120,4 +125,5 @@ export {
   // high level api
   login,
   setToken,
+  print,
 };

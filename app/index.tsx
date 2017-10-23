@@ -38,10 +38,10 @@ const store = createStore(
 sagaes.forEach((saga) => sagaMiddleware.run(saga));
 
 const transforms = [
-  createFilter('auth', ['id', 'token', 'is_admin', 'is_disabled', 'username']),
+  createFilter('auth', ['id', 'token', 'username', 'password', 'shop_number']),
 ];
 
-const blacklist = ['app', 'user', 'menu', 'menuItem', 'order', 'router', 'setting'];
+const blacklist = ['app', 'orders', 'router'];
 
 persistStore(
   store, { blacklist, transforms, keyPrefix: 'fresca.erp-client-v0.1:' }, () => {

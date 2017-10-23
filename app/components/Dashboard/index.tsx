@@ -4,33 +4,36 @@ import { connect, Dispatch } from 'react-redux';
 import { Action } from 'redux';
 import { withRouter } from 'react-router-dom';
 import { Orders, StoreRootState } from '../../reducers';
+import OrderAccepter from '../OrderAccepter';
+import StatusLabel from './StatusLabel';
 
-
-interface OwnProps extends React.Props<any>, RouteComponentProps<any> {
+interface OwnProps {
   orders: Orders.State;
 }
+
+type Props = OwnProps & RouteComponentProps<any>;
 
 interface State {
 
 }
 
-class OrderTable extends React.Component<OwnProps, State> {
+class Dashboard extends React.Component<Props, State> {
   render() {
     return (
       <div>
-        order table
+        <OrderAccepter />
+        <StatusLabel orders={this.props.orders} />
       </div>
     );
   }
 }
 
-const mapStateToProps = (state: StoreRootState) => {
+const mapStateToProps = (state: StoreRootState): OwnProps => {
   return { orders: state.orders };
 }
 
 const mapDispatchToProps = (dispatch: Dispatch<Action>) => {
-  return {
-  };
+  return { };
 }
 
-export default withRouter(connect(mapStateToProps, mapDispatchToProps)(OrderTable));
+export default withRouter(connect(mapStateToProps, mapDispatchToProps)(Dashboard));

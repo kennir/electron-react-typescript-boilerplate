@@ -5,6 +5,7 @@ import { RouteComponentProps } from 'react-router';
 import { withRouter } from 'react-router-dom';
 import { StoreRootState, Auth } from '../../reducers';
 import LoginForm from './form';
+import RequestStatusAlert from '../RequestStatusAlert';
 
 interface OwnProps {
   auth: Auth.State;
@@ -14,12 +15,13 @@ interface OwnDispatchProps extends DispatchProp<any> {
   onSubmit: (payload: {}) => void;
 }
 
-type WholeProps = OwnProps & OwnDispatchProps & RouteComponentProps<any>;
+type Props = OwnProps & OwnDispatchProps & RouteComponentProps<any>;
 
-const loginPage: React.SFC<WholeProps> = (props: WholeProps) => {
+const loginPage: React.SFC<Props> = (props: Props) => {
   const { username, password, requestStatus } = props.auth;
   return (
     <div>
+      <RequestStatusAlert requestStatus={requestStatus} />
       <LoginForm
         username={username}
         password={password}

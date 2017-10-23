@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html lang="cn">
+    <head>
+        <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+        <title>FRESCA Recept</title>
+    </head>
+    <body style="margin:0; padding:0;">
+        <p style="text-align:center; font-size:24px; margin:0">欢迎光临</p>
+        <h1 style="text-align:center; font-size:32px; font-weight:bold; margin:0">FRESCA黑叉烧</h1>
+        <br />
+        <p style="text-align:center; font-size:64px; margin:0" id="batch_number">#60</p>
+        <hr />
+        <p><label>订单号:</label><label id="order_number" style="margin-left:16px"></label></p>
+        <p><label>下单时间:</label><label id="date_actived" style="margin-left:16px"></label></p>
+        <p><label>电话:</label><label id="custom_name" style="margin-left:16px; font-weight:bold;"></label></p>
+        <p><label>地址:</label><label id="custom_address" style="margin-left:16px; font-weight:bold;"></label></p>
+        <p><label>电话:</label><label id="custom_phone" style="margin-left:16px; font-weight:bold;"></label></p>
+        <hr />
+        <p style="text-align:center; font-weight:bold;"><label>商品列表</label></p>
+        <p><label style="display:inline-block; width:200px;">品名</label><label style="display:inline-block; width:90px;">数量</label><label>价格</label></p>
+        <div id="items-root"></div>
+    </body>
+    <script>
+        var moment = require('moment');
+        var ipc = require('electron').ipcRenderer;
+        ipc.once('setup-content', (event, arg) => {
+            const batch_number = arg['platform_batch_number'] ? arg['platform_batch_number'] : arg['batch_number'];
+            document.getElementById('batch_number').innerHTML=`#${batch_number}`;
+
+            document.getElementById('order_number').innerHTML=arg['order_number'];
+            document.getElementById('date_actived').innerHTML=moment(arg['date_actived']).format('YYYY-MM-DD HH:mm:ss');
+            document.getElementById('custom_name').innerHTML=arg['custom_name'];
+            document.getElementById('custom_address').innerHTML=arg['custom_address'];
+            document.getElementById('custom_phone').innerHTML=arg['custom_phone'];
+
+            itemsRoot = document.getElementById('items-root');
+            arg['items'].forEach(item => {
+                itemsRoot.innerHTML += `<p><label style="display:inline-block; width:200px;">${item['name']}</label><label style="display:inline-block; width:90px;">${item['quantity']}</label><label>${item['price']}</label></p>`
+            })
+        })
+    </script>
+</html>
