@@ -37,7 +37,7 @@ const installExtensions = () => {
 };
 
 const printOrder = (order) => {
-  let receptWindow = new BrowserWindow({width: 210, height: 1200, show: false});
+  let receptWindow = new BrowserWindow({width: 164, height: 1200, show: false});
   receptWindow.on('closed', () => { receptWindow = null; });
   receptWindow.loadURL(`file://${__dirname}/static/recept.html`);
   receptWindow.webContents.on('did-finish-load', () => {

@@ -4,21 +4,25 @@
         <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
         <title>FRESCA Recept</title>
     </head>
-    <body style="margin:0; padding:0;">
-        <p style="text-align:center; font-size:24px; margin:0">欢迎光临</p>
-        <h1 style="text-align:center; font-size:32px; font-weight:bold; margin:0">FRESCA黑叉烧</h1>
-        <br />
-        <p style="text-align:center; font-size:64px; margin:0" id="batch_number">#60</p>
-        <hr />
-        <p><label>订单号:</label><label id="order_number" style="margin-left:16px"></label></p>
-        <p><label>下单时间:</label><label id="date_actived" style="margin-left:16px"></label></p>
-        <p><label>电话:</label><label id="custom_name" style="margin-left:16px; font-weight:bold;"></label></p>
-        <p><label>地址:</label><label id="custom_address" style="margin-left:16px; font-weight:bold;"></label></p>
-        <p><label>电话:</label><label id="custom_phone" style="margin-left:16px; font-weight:bold;"></label></p>
-        <hr />
-        <p style="text-align:center; font-weight:bold;"><label>商品列表</label></p>
-        <p><label style="display:inline-block; width:200px;">品名</label><label style="display:inline-block; width:90px;">数量</label><label>价格</label></p>
+    <body style="margin:0; padding:0; width:58m; border:0x;">
+        <p style="text-align:center; font-size:24px; margin:0; padding:0" >欢迎光临</p>
+        <h1 style="text-align:center; font-size:28px; font-weight:bold; margin:0; padding:0">FRESCA黑叉烧</h1>
+        <p style="text-align:center; margin:0; padding:0">*******************</p>
+        <p style="text-align:center; font-size:64px; margin:0; padding:0" id="batch_number">#60</p>
+        <p style="text-align:center; margin:0; padding:0">-------------------</p>
+        <p style="text-align:center; margin:0; padding:0"><label>下单时间:</label><label id="date_actived" style="margin-left:16px"></label></p>
+        <p style="text-align:center;"><label>----------客户信息----------</label></p>
+        <p><label id="custom_address" style="margin-left:16px; font-weight:bold; font-size:24px;"></label></p>
+        <p><label id="custom_name" style="margin-left:16px; font-weight:bold; font-size:24px;"></label></p>
+        <p><label id="custom_phone" style="margin-left:16px; font-weight:bold; font-size:24px;"></label></p>
+        <p style="text-align:center;"><label>----------商品列表----------</label></p>
         <div id="items-root"></div>
+        <p style="text-align:center;"><label>------------费用------------</label></p>
+        <div id="price-root"></div>
+        <p style="text-align:center; margin:0; padding:0">-------------------</p>
+        <p style="font-size:24px; margin:0; padding:0"><label style="text-align:left">已付</label><label style="text-align:right" id="pay_amount"></label></p>
+        <p><label id="order_number" style="text-align:center"></label></p>
+        <p style="text-align:center; margin:0; padding:0">**欢迎再次光临FRESCA**</p>
     </body>
     <script>
         var moment = require('moment');
@@ -29,14 +33,28 @@
 
             document.getElementById('order_number').innerHTML=arg['order_number'];
             document.getElementById('date_actived').innerHTML=moment(arg['date_actived']).format('YYYY-MM-DD HH:mm:ss');
+
             document.getElementById('custom_name').innerHTML=arg['custom_name'];
             document.getElementById('custom_address').innerHTML=arg['custom_address'];
             document.getElementById('custom_phone').innerHTML=arg['custom_phone'];
 
+            document.getElementById('pay_amount').innerHTML=arg['pay_amount']
+
             itemsRoot = document.getElementById('items-root');
             arg['items'].forEach(item => {
-                itemsRoot.innerHTML += `<p><label style="display:inline-block; width:200px;">${item['name']}</label><label style="display:inline-block; width:90px;">${item['quantity']}</label><label>${item['price']}</label></p>`
+                itemsRoot.innerHTML += `<p><label style="display:inline-block; width:65%;">${item['name']}</label><label style="display:inline-block; width:25%;">${item['quantity']}</label><label>${item['price']}</label></p>`
             })
+
+            priceRoot = document.getElementById('price-root');
+            value = arg['platform_reduction']
+            if (value && value !== 0) {
+                priceRoot.innerHTML += `<p><label style="display:inline-block; width:90%;">平台减免</label><label>${value}</label></p>`
+            }
+            value = arg['coupon']
+            if (value) {
+                priceRoot.innerHTML += `<p><label style="display:inline-block; width:90%;">使用红包</label><label>${value}</label></p>`
+            }
+            priceRoot.innerHTML += `<p><label style="display:inline-block; width:90%;">配送费</label><label>${arg['freight']}</label></p>`
         })
     </script>
 </html>
